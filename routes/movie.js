@@ -7,11 +7,28 @@ const router = express.Router()
 
 router.get('/',(req , res)=>{
     Movie.find()
-    .limit(500)
+    .limit(200)
     .then(movies=>res.status(200).json(movies))
     .catch(error=>res.status(500).json(error))
     
 })
+
+
+router.get('/popular',(req , res)=>{
+    Movie.find({is_popular:true})
+    .populate('category')
+    .then(movies=>res.status(200).json(movies))
+    .catch(error=>res.status(500).json(error))
+})
+
+router.get('/featured',(req , res)=>{
+    Movie.find({is_featured:true})
+    .populate('category')
+    .then(movies=>res.status(200).json(movies))
+    .catch(error=>res.status(500).json(error))
+})
+
+
 
 
 router.post('/',(req,res)=>{
